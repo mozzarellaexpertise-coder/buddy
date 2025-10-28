@@ -19,7 +19,7 @@
     let editAge: string = '';
 
     // NOTE: Replace this with your actual server URL (e.g., your PythonAnywhere URL)
-    const API_BASE_URL = "http://127.0.0.1:5000"; // Use your local host for testing
+    const API_BASE_URL = "http://flasksvelte.pythonanywhere.com"; // Use your local host for testing
 
     // --- Core Data Fetching (Read) ---
     async function fetchBuddies() {
