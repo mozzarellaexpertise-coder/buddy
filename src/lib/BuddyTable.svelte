@@ -102,10 +102,10 @@ async function fetchBuddies(sortBy: string = '', order: string = '') {
 </script>
 
 <div class="sort-buttons">
-    <button on:click={() => fetchBuddies('name', 'asc')}>Name ↑</button>
-    <button on:click={() => fetchBuddies('name', 'desc')}>Name ↓</button>
-    <button on:click={() => fetchBuddies('age', 'asc')}>Age ↑</button>
-    <button on:click={() => fetchBuddies('age', 'desc')}>Age ↓</button>
+    <button title="Sort by Name Ascending" on:click={() => fetchBuddies('name', 'asc')}>🅰️🔼</button>
+    <button title="Sort by Name Descending" on:click={() => fetchBuddies('name', 'desc')}>🅰️🔽</button>
+    <button title="Sort by Age Ascending" on:click={() => fetchBuddies('age', 'asc')}>🎂🔼</button>
+    <button title="Sort by Age Descending" on:click={() => fetchBuddies('age', 'desc')}>🎂🔽</button>
 </div>
 
 <div class="container">
@@ -314,4 +314,36 @@ async function fetchBuddies(sortBy: string = '', order: string = '') {
             justify-content: space-around;
         }
     }
+
+    .sort-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sort-buttons button {
+    flex: 1 1 45%; /* two buttons per row on small screens */
+    padding: 10px 0;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    transition: 0.2s;
+    font-size: 1rem;
+}
+
+.sort-buttons button:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 400px) {
+    .sort-buttons button {
+        flex: 1 1 100%; /* stack buttons on very small screens */
+    }
+}
+
 </style>
