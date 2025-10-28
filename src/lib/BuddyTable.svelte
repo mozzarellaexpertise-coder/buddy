@@ -18,20 +18,24 @@
 
     const API_BASE_URL = "https://flasksvelte.pythonanywhere.com";
 
-    async function fetchBuddies() {
-        isLoading = true;
-        error = null;
-        try {
-            const response = await fetch(`${API_BASE_URL}/readJSON`);
-            if (!response.ok) throw new Error(`HTTP status ${response.status}`);
-            const data: any[] = await response.json();
-            buddies = data.map(b => ({ ...b, id: Number(b.id) }));
-        } catch (e: any) {
-            error = `Error fetching data: ${e.message}`;
-        } finally {
-            isLoading = false;
+async function fetchBuddies(sortBy: string = '', order: string = '') {
+    isLoading = true;
+    error = null;
+    try {
+        let url = `${API_BASE_URL}/readJSON`;
+        if (sortBy && order) {
+            url += `?sort_by=${sortBy}&order=${order}`;
         }
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+        const data: any[] = await response.json();
+        buddies = data.map(b => ({ ...b, id: Number(b.id) }));
+    } catch (e: any) {
+        error = `Error fetching data: ${e.message}`;
+    } finally {
+        isLoading = false;
     }
+}    
 
     async function addBuddy() {
         if (!newName || !newAge) return;
@@ -96,6 +100,13 @@
         return 'color-old';
     }
 </script>
+
+<div class="sort-buttons">
+    <button on:click={() => fetchBuddies('name', 'asc')}>Name ↑</button>
+    <button on:click={() => fetchBuddies('name', 'desc')}>Name ↓</button>
+    <button on:click={() => fetchBuddies('age', 'asc')}>Age ↑</button>
+    <button on:click={() => fetchBuddies('age', 'desc')}>Age ↓</button>
+</div>
 
 <div class="container">
     <h1>💾 Buddy CRUD</h1>
